@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CYBERSEC PROTOCOL: REACQUISITION</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
@@ -20,7 +23,8 @@
                         'glitch-cyan': '#00aaff',
                     },
                     fontFamily: {
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+                        // Usamos VT323 como la fuente principal
+                        mono: ['VT323', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
                     },
                 }
             }
@@ -29,7 +33,8 @@
     <style>
         /* Base Styles */
         body {
-            font-family: 'ui-monospace', monospace;
+            /* 1. TIPOGRAFÍA APLICADA EN CSS */
+            font-family: 'VT323', monospace;
             min-height: 100vh;
             background-color: #050505;
             color: #00ff00; 
@@ -70,11 +75,11 @@
 
         /* Glitch Animation for Start Screen */
         @keyframes glitch {
-            0% { text-shadow: 2px 0 #glitch-red, -2px 0 #glitch-cyan; transform: translate(0); }
-            15% { text-shadow: 2px 0 #glitch-red, -2px 0 #glitch-cyan; transform: translate(1px, -1px); }
+            0% { text-shadow: 2px 0 #ff004c, -2px 0 #00aaff; transform: translate(0); }
+            15% { text-shadow: 2px 0 #ff004c, -2px 0 #00aaff; transform: translate(1px, -1px); }
             17% { text-shadow: none; transform: translate(-1px, 1px); }
-            20% { text-shadow: 2px 0 #glitch-red, -2px 0 #glitch-cyan; transform: translate(1px, 0); }
-            22% { text-shadow: 2px 0 #glitch-red, -2px 0 #glitch-cyan; transform: translate(0); }
+            20% { text-shadow: 2px 0 #ff004c, -2px 0 #00aaff; transform: translate(1px, 0); }
+            22% { text-shadow: 2px 0 #ff004c, -2px 0 #00aaff; transform: translate(0); }
             100% { text-shadow: none; }
         }
         .glitch-title {
@@ -98,50 +103,42 @@
             animation: fadeIn 1s ease-out forwards;
         }
         
-        /* Pigpen Symbol Style for AGENT */
-        .symbol-key {
-            /* Using Unicode characters for visual fidelity */
-            font-size: 3rem; 
-            line-height: 1;
-            margin: 0 10px; 
-            display: inline-block;
-            font-weight: bold;
-            color: #ffff00; 
-        }
-
         .disabled-phase {
             pointer-events: none;
             filter: grayscale(80%) brightness(50%);
             transition: all 0.5s;
         }
         
-        /* Revised Subtle Protocol List Style */
+        /* Revised Subtle Protocol List Style (for mobile visibility) */
         .subtle-protocol-chain {
-            font-size: 0.6rem; 
+            font-size: 0.75rem; 
             opacity: 0.2; 
             transition: opacity 0.3s;
-            white-space: nowrap; 
             overflow: hidden; 
             text-overflow: ellipsis; 
+            white-space: nowrap; 
         }
         .subtle-protocol-chain:hover {
             opacity: 1; 
             overflow: visible;
+            white-space: normal;
         }
 
-        /* New Shining Link/Key Effect */
+        /* Shine Animation */
         @keyframes shine {
             0%, 100% { 
-                /* More aggressive shadow for stronger shine */
                 text-shadow: 0 0 15px #ffff00, 0 0 30px #fff, 0 0 50px #ffff00, 0 0 70px #ffff00;
+                filter: brightness(1) drop-shadow(0 0 10px rgba(255,255,0,0.5)); 
                 opacity: 1; 
             }
             50% { 
-                /* Pulse effect with even stronger brightness */
                 text-shadow: 0 0 20px #ffff00, 0 0 40px #fff, 0 0 60px #ffff00, 0 0 90px #ffff00;
+                filter: brightness(1.2) drop-shadow(0 0 15px rgba(255,255,0,0.8)); 
                 opacity: 0.98;
             }
         }
+
+        /* New Shining Link/Key Effect (for Phase 6 cipher code) */
         .shining-link {
             text-decoration: none;
             color: #ffff00 !important; 
@@ -149,17 +146,25 @@
             border-bottom: 1px solid #ffff00;
             padding-bottom: 2px;
             animation: shine 1.2s ease-in-out infinite; 
-            /* Set initial state for immediate brightness */
             text-shadow: 0 0 15px #ffff00, 0 0 30px #fff;
         }
         
-        /* Ensure the link itself is fully clickable without interference */
         .shining-link a {
             pointer-events: auto !important; 
             cursor: pointer;
         }
 
-        /* New Clue Style (for Phase 4 and 6) */
+        /* NEW: Shining image for Phase 6 */
+        .shining-image {
+            animation: shine 1.2s ease-in-out infinite;
+            filter: brightness(1) drop-shadow(0 0 10px rgba(255,255,0,0.5));
+            max-width: 100%; 
+            height: auto;
+            display: block; 
+            margin: 0 auto; 
+        }
+
+        /* New Clue Style (without aggressive shine) */
         .secondary-clue {
             opacity: 0;
             transition: opacity 0.5s ease-in;
@@ -169,16 +174,15 @@
         }
         .secondary-clue.visible {
             opacity: 1;
-            animation: shine 2s ease-in-out infinite;
-            text-shadow: 0 0 8px #ffff00, 0 0 15px #fff;
+            text-shadow: 0 0 2px #ffff00; 
         }
     </style>
 </head>
 <body class="flex items-center justify-center p-4 font-mono">
 
-    <audio id="startSound" src="[URL_TO_TERMINAL_BEEP_SOUND]" preload="auto"></audio>
-    <audio id="successSound" src="[URL_TO_SUCCESS_SOUND]" preload="auto"></audio>
-    <audio id="errorSound" src="[URL_TO_ERROR_SOUND]" preload="auto"></audio>
+    <audio id="backgroundAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto" loop></audio>
+    <audio id="successSFX" src="https://actions.google.com/sounds/v1/alarms/digital_alarm_buzz.ogg" preload="auto"></audio>
+    <audio id="errorSFX" src="https://actions.google.com/sounds/v1/cartoon/whistle_fail.ogg" preload="auto"></audio>
     
     <div id="welcomeContainer" class="w-full max-w-xl animate-fade-in">
         <div class="terminal-window p-6 sm:p-8 rounded-none text-center">
@@ -188,11 +192,11 @@
             <h2 class="text-xl font-bold text-neon-blue mb-4">
                 [ ACCESS GRANTED: AGENT REACQUISITION ]
             </h2>
-            <p class="text-lg font-bold text-neon-green mb-6 border-b border-neon-green/50 pb-4">
+            <p class="text-lg text-neon-green mb-6 border-b border-neon-green/50 pb-4">
                 [ PROTOCOL_RESUMED_7.EXE ]
             </p>
             <p class="text-xs text-neon-green mb-8">
-                **It is the moment of truth.** We are not looking for candidates, we are **recruiting the next generation of elite**. If you can decrypt this security chain, your aptitude is verified. Your mission is the only test. The protocol chain is active. The solution is out there: use your intelligence, the network, or any resource beyond our reach. Prove you are the one percent.
+                **This is the ultimate test.** We are **recruiting the next generation of elite**. Decrypt this security chain to verify your aptitude. The protocol is active; use your intelligence and resources to find the solution. **Prove you are the one percent.**
             </p>
             
             <button
@@ -207,6 +211,10 @@
     <div id="mainContainer" class="w-full max-w-xl hidden opacity-0">
         <div class="terminal-window p-6 sm:p-8 rounded-none">
             
+            <div class="mb-4 text-xs text-neon-blue border-b border-neon-blue/20 pb-2 subtle-protocol-chain">
+                // ACTIVE_CHAIN_HASH: <span class="text-neon-yellow">Riddle</span> <span class="text-neon-yellow">RailFence</span> <span class="text-neon-yellow">ASCII</span> <span class="text-neon-yellow">A1Z26</span> <span class="text-neon-yellow">Book</span> <span class="text-neon-yellow">Pigpen</span>.
+            </div>
+
             <div class="flex justify-between items-center mb-6 border-b border-neon-green pb-2">
                 <span id="statusHeader" class="text-neon-blue font-bold uppercase">
                     [SYSTEM_LOG]
@@ -214,10 +222,6 @@
                 <span id="protocolStatus" class="text-neon-green">
                     > STATUS: PENDING_AUTH <span class="cursor quick-blink">_</span>
                 </span>
-            </div>
-
-            <div class="mb-4 text-xs text-neon-blue border-b border-neon-blue/20 pb-2 subtle-protocol-chain">
-                // ACTIVE_CHAIN_HASH: <span class="text-neon-yellow">Riddle</span>, <span class="text-neon-yellow">Transposition</span>, <span class="text-neon-yellow">ASCII</span>, <span class="text-neon-yellow">Lexicon</span>, <span class="text-neon-yellow">A1Z26</span>, <span class="text-neon-yellow">Masonic</span>.
             </div>
 
             <div id="phase1Section">
@@ -230,7 +234,7 @@
                 </p>
                 <div class="mb-6 pt-4 border-t border-neon-green/50">
                     <p class="text-base text-neon-green">
-                        [QUERY_01]: "I have two silver eyes, but cannot see. I govern the tides and haunt the night. A celestial body that does not shine, yet lights the path. What am I?"
+                        [QUERY_01]: "I am a body in the sky that shrinks and grows. I give you light at night, though my shine is borrowed. What am I?"
                     </p>
                     <p class="text-xs text-neon-yellow mt-2 font-bold">
                         >> GOOD LUCK, AGENT. The first sequence awaits your intellect.
@@ -259,6 +263,7 @@
                 <p class="text-sm text-neon-yellow mb-4 text-center font-bold">
                     [CLUE]: "I do not substitute; I merely rearrange. To read me, you must zig-zag across two silent tracks."
                 </p>
+                
                 <p class="text-xs text-neon-green mb-2 font-bold text-center">
                     >> EXCELLENT WORK. Focus on the structure of the paths.
                 </p>
@@ -285,22 +290,20 @@
 
             <div id="phase3Section" class="mt-8 pt-6 border-t border-neon-yellow disabled-phase hidden opacity-0 transition duration-1000">
                 <h2 class="text-xl font-bold text-neon-yellow mb-4 text-center">
-                    [PHASE 3: Click here]
+                    [PHASE 3: THE CRITICAL PATH]
                 </h2>
                 <p class="text-sm text-neon-green mb-4 text-center font-bold">
-                    [CLUE]: "You're close. The path is numbered in the standard system. Decode the stream of integers into their sequence. **Do you know the ASCII code? It could help you!**"
+                    [CLUE]: "You're close. The path is numbered in the standard system. Decode the stream of integers into their sequence."
                 </p>
+                
+                <p id="secondaryClue3" class="text-sm text-neon-yellow mt-0 mb-4 font-bold text-center secondary-clue">
+                    **Do you know the ASCII code? It could help you!**
+                </p>
+
                 <p class="text-xs text-neon-purple mb-2 font-bold text-center">
                     >> WARNING: EXACT INPUT REQUIRED. The sequence holds a direct address.
                 </p>
                 
-                <div class="bg-gray-900/50 p-4 mb-6 border border-neon-yellow/50 text-xs leading-5">
-                    <span class="text-neon-yellow font-bold">DATA STREAM (ASCII DECIMAL):</span><br>
-                    <p class="text-neon-blue leading-tight mb-2">
-                        104, 116, 116, 112, 115, 58, 47, 47, 110, 57, 46, 99, 108, 47, 99, 50, 106, 115, 117
-                    </p>
-                </div>
-
                 <div class="text-center mb-6">
                     <p id="cipherCode3" class="text-base sm:text-xl font-mono tracking-widest text-neon-yellow p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-purple/30 whitespace-normal border-r-4 border-l-4 border-neon-yellow">
                         104 116 116 112 115 58 47 47 110 57 46 99 108 47 99 50 106 115 117
@@ -331,55 +334,10 @@
             
             <div id="phase4Section" class="mt-8 pt-6 border-t border-neon-green disabled-phase hidden opacity-0 transition duration-1000">
                 <h2 class="text-xl font-bold text-neon-green mb-4 text-center">
-                    [PHASE 4: CONTEXTUAL INDEXING]
+                    [PHASE 4: THE SIMPLE TRUTH]
                 </h2>
                 <p class="text-sm text-neon-yellow mb-4 text-center font-bold">
-                    [CLUE]: "I speak not with letters, but with indices. My message is hidden within the pages we both share."
-                </p>
-
-                <p id="secondaryClue4" class="text-sm text-neon-yellow mt-0 mb-4 font-bold text-center secondary-clue">
-                    Hint: This cipher is based "by word" counting from zero. Also, the solution can be described "by word".
-                </p>
-                
-                <p class="text-xs text-neon-blue mb-2 font-bold text-center">
-                    >> THIS PHASE REQUIRES CONTEXT. Find the corresponding characters in the source text.
-                </p>
-                
-                <div class="bg-gray-900/50 p-4 mb-6 border border-neon-purple/50 text-xs leading-5">
-                    <span class="text-neon-purple font-bold">SOURCE_TEXT (CYBER_MANIFESTO_1.0):</span><br>
-                    <p id="sourceText4" class="whitespace-normal">
-                        There are systems everywhere. To really win, the agent must understand that the best defense is often the ability to hide in plain sight. Our future is in the network, not in the shadows. Replicate your presence.
-                    </p>
-                </div>
-
-                <div class="text-center mb-6">
-                    <p id="cipherCode4" class="text-2xl sm:text-3xl font-mono tracking-widest text-neon-purple p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-purple">
-                        10 16 3 34 27 25 30
-                    </p>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <input
-                        type="text"
-                        id="answerInput4"
-                        placeholder="> ENTER DECRYPTED PASSWORD (NO SPACES)..."
-                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-purple uppercase"
-                    >
-                    <button
-                        id="submitButton4"
-                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
-                    >
-                        [ VERIFY ]
-                    </button>
-                </div>
-            </div>
-            
-            <div id="phase5Section" class="mt-8 pt-6 border-t border-neon-purple disabled-phase hidden opacity-0 transition duration-1000">
-                <h2 class="text-xl font-bold text-neon-purple mb-4 text-center">
-                    [PHASE 5: THE SIMPLE TRUTH]
-                </h2>
-                <p class="text-sm text-neon-yellow mb-4 text-center font-bold">
-                    [CLUE]: "The protocol is as basic as the alphabet itself. Convert the position of each letter into its numeric value."
+                    [CLUE]: "I am the language of position. To read me, you must speak the sequence of the first 26."
                 </p>
                 
                 <p class="text-xs text-neon-blue mb-2 font-bold text-center">
@@ -391,7 +349,7 @@
                 </p>
                 
                 <div class="text-center mb-6">
-                    <p id="cipherCode5" class="text-2xl sm:text-3xl font-mono tracking-widest text-neon-green p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-green">
+                    <p id="cipherCode4" class="text-2xl sm:text-3xl font-mono tracking-widest text-neon-green p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-green">
                         05 12 09 20 05
                     </p>
                 </div>
@@ -399,19 +357,61 @@
                 <div class="flex flex-col sm:flex-row gap-3">
                     <input
                         type="text"
-                        id="answerInput5"
+                        id="answerInput4"
                         placeholder="> ENTER ALPHABETIC KEY (NO SPACES)..."
                         class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-green uppercase"
                     >
                     <button
-                        id="submitButton5"
+                        id="submitButton4"
                         class="submit-btn py-3 px-6 rounded-none transition duration-300"
                     >
                         [ DECODE ALFA ]
                     </button>
                 </div>
             </div>
-            
+            <div id="phase5Section" class="mt-8 pt-6 border-t border-neon-purple disabled-phase hidden opacity-0 transition duration-1000">
+                <h2 class="text-xl font-bold text-neon-purple mb-4 text-center">
+                    [PHASE 5: CONTEXTUAL INDEXING]
+                </h2>
+                <p class="text-sm text-neon-yellow mb-4 text-center font-bold">
+                    [CLUE]: "I speak not with letters, but with indices. My message is hidden within the pages we both share."
+                </p>
+                <p class="text-xs text-neon-blue mb-2 font-bold text-center">
+                    >> THIS PHASE REQUIRES CONTEXT.
+                </p>
+                
+                <p id="secondaryClue5" class="text-xs text-neon-yellow mt-2 font-bold text-center secondary-clue">
+                    The key is the word, the lock is the index.
+                </p>
+                
+                <div class="bg-gray-900/50 p-4 mb-6 border border-neon-purple/50 text-xs leading-5">
+                    <span class="text-neon-purple font-bold">SOURCE_TEXT (CYBER_MANIFESTO_1.0):</span><br>
+                    <p id="sourceText" class="whitespace-normal">
+                        There are systems everywhere. To really win, the agent must understand that the best defense is often the ability to hide in plain sight. Our future is in the network, not in the shadows. Replicate your presence.
+                    </p>
+                </div>
+
+                <div class="text-center mb-6">
+                    <p id="cipherCode5" class="text-2xl sm:text-3xl font-mono tracking-widest text-neon-purple p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-purple">
+                        10 16 3 34 27 25 30
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input
+                        type="text"
+                        id="answerInput5"
+                        placeholder="> ENTER DECRYPTED PASSWORD (NO SPACES)..."
+                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-purple uppercase"
+                    >
+                    <button
+                        id="submitButton5"
+                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
+                    >
+                        [ VERIFY ]
+                    </button>
+                </div>
+            </div>
             <div id="phase6Section" class="mt-8 pt-6 border-t border-neon-yellow disabled-phase hidden opacity-0 transition duration-1000">
                 <h2 class="text-xl font-bold text-neon-yellow mb-4 text-center">
                     [PHASE 6: THE FINAL ENCRYPTION]
@@ -420,28 +420,22 @@
                     >> FINAL KEY REQUIRED. Confirm your loyalty with the ancient protocol.
                 </p>
                 <p class="text-xs text-neon-blue mb-2 font-bold text-center">
-                    >> THIS IS IT. Trust the symbols of the **Masonic Cipher**.
+                    >> THIS IS IT. Trust the symbols of the brotherhood.
                 </p>
                 
-                <p id="secondaryClue6" class="text-xs text-neon-yellow mt-2 font-bold text-center secondary-clue">
-                    "The final key is your designation. Search for the structure, not the meaning."
+                <p id="secondaryClue6" class="text-xs text-neon-yellow mt-2 mb-4 font-bold text-center secondary-clue">
+                    "Sometimes, returning to your past is the solution."
                 </p>
 
                 <div class="bg-gray-900/50 p-4 mb-6 border border-neon-yellow/50 text-xs leading-5">
-                    <span class="text-neon-yellow font-bold">FINAL KEY REFERENCE (MASONIC CIPHER):</span><br>
+                    <span class="text-neon-yellow font-bold">FINAL KEY REFERENCE:</span><br>
                     <p class="text-neon-blue leading-tight mb-2">
                         [RIDDLE]: "I am drawn from nine cells and two 'X' marks. My letters are pieces of a grid, some holding a single point of light. The secret is held by geometry."
                     </p>
                 </div>
 
                 <div class="text-center mb-6">
-                    <p id="cipherCode6" class="text-3xl sm:text-4xl font-mono tracking-widest text-neon-yellow p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-purple/30 whitespace-nowrap border-r-4 border-l-4 border-neon-yellow">
-                        <span class="symbol-key">惚</span> 
-                        <span class="symbol-key">忽</span> 
-                        <span class="symbol-key">克</span> 
-                        <span class="symbol-key">鵠</span> 
-                        <span class="symbol-key">獄</span>
-                    </p>
+                    <img id="cipherImage6" src="/AGENT.png" alt="Pigpen Cipher" class="shining-image w-2/3 md:w-1/2 lg:w-1/3 mx-auto p-3 bg-gray-900/50 rounded-none shadow-inner shadow-neon-purple/30 border-r-4 border-l-4 border-neon-yellow" style="image-rendering: pixelated;"/>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3">
@@ -468,15 +462,17 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- AUDIO SETUP ---
-            // NOTE: Since I cannot host files, replace the placeholders below with actual URLs 
-            const startSound = new Audio(); // Placeholder for Start Sound
-            const successSound = new Audio(); // Placeholder for Success Sound
-            const errorSound = new Audio(); // Placeholder for Error Sound
+            // --- AUDIO CONSTANTS AND REFERENCES ---
+            const backgroundAudio = document.getElementById('backgroundAudio');
+            const successSFX = document.getElementById('successSFX');
+            const errorSFX = document.getElementById('errorSFX');
             
-            const playSound = (audioElement) => {
-                if (audioElement && audioElement.src) {
-                    audioElement.play().catch(e => console.log("Audio playback failed:", e));
+            const startBackgroundMusic = () => {
+                if (backgroundAudio && backgroundAudio.src.includes('soundhelix')) { // Checks if the placeholder was replaced
+                    backgroundAudio.volume = 0.5; // Set volume to half
+                    backgroundAudio.play().catch(e => console.log("Background audio playback failed:", e));
+                } else {
+                    console.log("Audio placeholder not replaced or playback failed.");
                 }
             };
             // --- END AUDIO SETUP ---
@@ -493,57 +489,49 @@
             const phase1Section = document.getElementById('phase1Section');
             const phase2Section = document.getElementById('phase2Section');
             const phase3Section = document.getElementById('phase3Section');
-            const phase4Section = document.getElementById('phase4Section'); // Phase 4 Elements (Now Lexicon/Book Cipher)
-            const phase5Section = document.getElementById('phase5Section'); // Phase 5 Elements (Now A1Z26)
+            const phase4Section = document.getElementById('phase4Section'); 
+            const phase5Section = document.getElementById('phase5Section'); 
             const phase6Section = document.getElementById('phase6Section'); 
 
-            // Input/Button References (Adjusted due to phase 4 and 5 swap)
-            const answerInput1 = document.getElementById('answerInput1');
-            const submitButton1 = document.getElementById('submitButton1');
-            const answerInput2 = document.getElementById('answerInput2');
-            const submitButton2 = document.getElementById('submitButton2');
-            const answerInput3 = document.getElementById('answerInput3');
-            const submitButton3 = document.getElementById('submitButton3');
-            const answerInput4 = document.getElementById('answerInput4'); // New Phase 4 Input/Button (Formerly 5 - Lexicon)
-            const submitButton4 = document.getElementById('submitButton4'); 
-            const answerInput5 = document.getElementById('answerInput5'); // New Phase 5 Input/Button (Formerly 4 - A1Z26)
-            const submitButton5 = document.getElementById('submitButton5'); 
-            const answerInput6 = document.getElementById('answerInput6');
-            const submitButton6 = document.getElementById('submitButton6');
+            // Input/Button References (omitted for brevity in this section)
 
             // Specific Elements
+            const pathSolution = 'https://n9.cl/c2jsu'; 
             const activeLink = document.getElementById('activeLink');
             const decryptedLinkDisplay = document.getElementById('decryptedLinkDisplay');
-            const secondaryClue4 = document.getElementById('secondaryClue4'); // New Phase 4 Clue Element
+            const secondaryClue3 = document.getElementById('secondaryClue3'); 
+            const secondaryClue5 = document.getElementById('secondaryClue5'); 
             const secondaryClue6 = document.getElementById('secondaryClue6'); 
-            const cipherCode6 = document.getElementById('cipherCode6'); 
+            const cipherImage6 = document.getElementById('cipherImage6'); 
 
-            // Global Constant
-            const pathSolution = 'https://n9.cl/c2jsu'; 
 
             // Utility functions (showMessage, activateNextPhase, etc.)
             const showMessage = (message, isSuccess = false, borderColorClass = 'border-red-600') => {
+                
+                // 3. REPRODUCCIÓN DE SFX EN MENSAJES
                 if (isSuccess) {
-                    playSound(successSound);
+                    successSFX.currentTime = 0;
+                    successSFX.play().catch(e => console.log("Success SFX failed:", e));
                 } else {
-                    playSound(errorSound);
+                    errorSFX.currentTime = 0;
+                    errorSFX.play().catch(e => console.log("Error SFX failed:", e));
                 }
-
+                
                 resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-green', 'border-neon-blue', 'border-neon-purple', 'border-neon-yellow', 'border-4');
                 resultOutput.classList.add('bg-terminal-black', 'border', 'rounded-none', 'animate-fade-in');
                 
                 if (isSuccess) {
-                    resultOutput.classList.add(borderColorClass);
+                    resultOutput.classList.add(`border-${borderColorClass}`);
                     resultOutput.innerHTML = `<p class="text-base text-neon-green">[STATUS: OK] ${message}</p>`;
                 } else {
-                    resultOutput.classList.add(borderColorClass);
-                    resultOutput.innerHTML = `<p class="text-base text-red-500">[ERROR] ${message}</p>`;
+                    resultOutput.classList.add('border-glitch-red');
+                    resultOutput.innerHTML = `<p class="text-base text-glitch-red">[ERROR] ${message}</p>`;
                 }
                 
                 if (!isSuccess) {
                     setTimeout(() => {
                         resultOutput.classList.add('hidden');
-                        resultOutput.classList.remove('bg-terminal-black', 'border-red-600', 'border');
+                        resultOutput.classList.remove('bg-terminal-black', 'border-glitch-red', 'border');
                         resultOutput.innerHTML = '';
                     }, 3000);
                 }
@@ -551,39 +539,66 @@
 
             const activateNextPhase = (currentPhase, nextPhase, phaseNumber, color) => {
                 currentPhase.classList.add('disabled-phase');
-                nextPhase.classList.remove('hidden');
-                nextPhase.classList.remove('disabled-phase');
-                
-                setTimeout(() => {
-                    nextPhase.classList.add('opacity-100');
-                    nextPhase.classList.remove('opacity-0');
-                    statusHeader.innerHTML = `[PHASE ${phaseNumber}]`; 
-                    protocolStatus.innerHTML = `> STATUS: ACTIVE <span class="cursor quick-blink">_</span>`;
+                if (nextPhase) {
+                    nextPhase.classList.remove('hidden');
+                    nextPhase.classList.remove('disabled-phase');
                     
-                    // Specific logic for clue activation
-                    if (phaseNumber === '4') {
-                        // Phase 4 (Lexicon) - Clue Timing for 5 seconds
-                        secondaryClue4.classList.remove('visible'); 
-                        setTimeout(() => {
-                            secondaryClue4.classList.add('visible');
-                        }, 5000); // 5 seconds delay
-                    } else if (phaseNumber === '6') {
-                        // Phase 6 (Pigpen) - Clue Timing and Shine
-                        cipherCode6.classList.add('shining-link');
-                        secondaryClue6.classList.remove('visible'); 
-                        setTimeout(() => {
-                            secondaryClue6.classList.add('visible');
-                        }, 60000); // Keeps 60 seconds
-                    }
+                    setTimeout(() => {
+                        nextPhase.classList.add('opacity-100');
+                        nextPhase.classList.remove('opacity-0');
+                        statusHeader.innerHTML = `[PHASE ${phaseNumber}]`; 
+                        protocolStatus.innerHTML = `> STATUS: ACTIVE <span class="cursor quick-blink">_</span>`;
+                        
+                        const clueDelay = 15000; // 15 seconds
+                        
+                        if (phaseNumber === '3') {
+                            secondaryClue3.classList.remove('visible'); 
+                            setTimeout(() => { secondaryClue3.classList.add('visible'); }, clueDelay); 
+                        } else if (phaseNumber === '5') {
+                            secondaryClue5.classList.remove('visible'); 
+                            setTimeout(() => { secondaryClue5.classList.add('visible'); }, clueDelay); 
+                        } else if (phaseNumber === '6') {
+                            if (cipherImage6) { cipherImage6.classList.add('shining-image'); }
+                            secondaryClue6.classList.remove('visible'); 
+                            setTimeout(() => { secondaryClue6.classList.add('visible'); }, clueDelay); 
+                        }
 
-                }, 50);
+                    }, 50);
+                }
                 
-                showMessage("PROTOCOL ACCEPTED. ADVANCING TO NEXT ENCRYPTION LAYER. Keep up the good work.", true, `border-${color}`);
+                showMessage("PROTOCOL ACCEPTED. ADVANCING TO NEXT ENCRYPTION LAYER. Keep up the good work.", true, color);
             };
             
-            // --- Welcome Screen Logic ---
+            const showFinalSuccess = (targetPhrase) => {
+                phase6Section.classList.add('opacity-50');
+
+                // 3. SFX DE ÉXITO FINAL (reutilizando successSFX)
+                successSFX.currentTime = 0;
+                successSFX.play().catch(e => console.log("Final Success SFX failed:", e));
+
+                resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-yellow');
+                resultOutput.classList.add('bg-terminal-black', 'border-4', 'border-neon-purple', 'rounded-none', 'animate-fade-in');
+
+                // 2. CORRECCIÓN PARA MÓVIL: CLASES RESPONSIVAS Y SIN 'whitespace-nowrap'
+                resultOutput.innerHTML = `
+                    <p class="text-xl sm:text-2xl font-bold text-neon-green mb-4">
+                        [ FULL PROTOCOL DECRYPTED ]
+                    </p>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-neon-yellow tracking-wider mb-6">
+                        ${targetPhrase}
+                    </p>
+                    <p class="text-xl sm:text-2xl text-neon-green font-bold mb-4">
+                        AGENT AUTHORIZED. YOUR PROFILE HAS BEEN ACCEPTED INTO THE CIRCLE.
+                    </p>
+                    <p class="text-4xl sm:text-5xl font-extrabold text-neon-green tracking-widest">
+                        MISSION ACCOMPLISHED <span class="text-5xl sm:text-6xl">脂</span>
+                    </p>
+                `;
+            }
+
+            // --- EVENT LISTENERS ---
             startMissionButton.addEventListener('click', () => {
-                playSound(startSound);
+                startBackgroundMusic(); // Start BGM on user interaction
                 welcomeContainer.classList.add('hidden');
                 mainContainer.classList.remove('hidden');
                 setTimeout(() => {
@@ -595,196 +610,87 @@
             });
 
 
-            // --- Phase 1: Riddle (MOON) -> Phase 2 (Answer: MOON) ---
-            const checkAnswer1 = () => {
-                const answer = answerInput1.value.trim().toLowerCase().replace(/[^a-z]/g, ''); 
-                const correctAnswer = 'moon'; // Correct answer for the moon riddle
-                if (answer === correctAnswer) {
-                    answerInput1.disabled = true;
-                    submitButton1.disabled = true;
-                    submitButton1.classList.replace('submit-btn', 'bg-gray-700');
-                    submitButton1.innerText = "[ SOURCE LOCKED ]";
-                    activateNextPhase(phase1Section, phase2Section, '2', 'neon-green');
-                } else {
-                    showMessage("ACCESS DENIED. INCORRECT CODE SOURCE.", false);
-                }
-            };
-            submitButton1.addEventListener('click', checkAnswer1);
-            answerInput1.addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter' && !submitButton1.disabled) checkAnswer1();
-            });
+            // Helper function to handle the core logic for all phases
+            const setupPhaseLogic = (phaseNum, correctAns, color, nextPhaseSection, inputId, buttonId, cleanFn, customSuccessFn) => {
+                const inputElement = document.getElementById(inputId);
+                const buttonElement = document.getElementById(buttonId);
+                const currentSection = document.getElementById(`phase${phaseNum}Section`);
+                const nextSection = document.getElementById(nextPhaseSection);
 
+                const checkAnswer = () => {
+                    const decodedMessage = cleanFn(inputElement.value);
 
-            // --- Phase 2: Rail Fence Cipher (CYBER) -> Phase 3 (Answer: CYBER) ---
-            const checkAnswer2 = () => {
-                const targetPhrase = 'CYBER'; 
-                const decodedMessage = answerInput2.value.trim().toUpperCase().replace(/[^A-Z]/g, '');
-                if (decodedMessage === targetPhrase) {
-                    answerInput2.disabled = true;
-                    submitButton2.disabled = true;
-                    submitButton2.classList.replace('submit-btn', 'bg-gray-700');
-                    submitButton2.innerText = "[ DECODE LOCKED ]";
-                    activateNextPhase(phase2Section, phase3Section, '3', 'neon-blue'); 
-                } else {
-                    showMessage("DECRYPTION FAILED. SEQUENCE MISMATCH. You are close, keep trying.", false, 'border-neon-blue');
-                }
-            };
-            submitButton2.addEventListener('click', checkAnswer2);
-            answerInput2.addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter' && !submitButton2.disabled) checkAnswer2(); 
-            });
+                    if (decodedMessage === correctAns) {
+                        inputElement.disabled = true;
+                        buttonElement.disabled = true;
+                        buttonElement.classList.replace('submit-btn', 'bg-gray-700');
+                        
+                        // Custom logic for Phase 3 link
+                        if (phaseNum === 3) {
+                            activeLink.textContent = pathSolution;
+                            activeLink.href = pathSolution;
+                            buttonElement.innerText = "[ PATH RESOLVED ]";
+                        } else if (phaseNum === 6) {
+                            buttonElement.innerText = "[ PROTOCOL COMPLETE ]";
+                            showFinalSuccess(correctAns);
+                            return; 
+                        } else {
+                            buttonElement.innerText = (phaseNum === 1) ? "[ SOURCE LOCKED ]" : 
+                                                     (phaseNum === 2) ? "[ DECODE LOCKED ]" : 
+                                                     (phaseNum === 4) ? "[ ALFA LOCKED ]" : 
+                                                     "[ VERIFIED ]";
+                        }
+                        
+                        // Custom success for Phase 5
+                        if (phaseNum === 5) {
+                            // Custom success message for Phase 5 (to show the link)
+                            showMessage("PROTOCOL ACCEPTED. ADVANCING TO NEXT ENCRYPTION LAYER. Keep up the good work.", true, color);
+                            // Custom display logic for link
+                            resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-yellow');
+                            resultOutput.classList.add('bg-terminal-black', 'border', 'border-neon-purple', 'rounded-none', 'animate-fade-in');
 
+                            if (activeLink.href === pathSolution) { 
+                                activeLink.classList.remove('text-neon-purple'); 
+                                decryptedLinkDisplay.classList.add('shining-link'); 
+                                decryptedLinkDisplay.classList.remove('hidden', 'opacity-0');
+                                decryptedLinkDisplay.classList.add('opacity-100');
+                            }
 
-            // --- Phase 3: ASCII Cipher (https://n9.cl/c2jsu) -> Phase 4 (Answer: https://n9.cl/c2jsu) ---
-            const checkAnswer3 = () => {
-                const decodedMessage = answerInput3.value.trim().toLowerCase(); 
+                            resultOutput.innerHTML = `
+                                <p class="text-base text-neon-green">[CONTEXTUAL INDEXING VERIFIED]</p>
+                                <p class="text-sm text-neon-yellow mb-2">
+                                    **SUCCESS.** The indices are aligned. Proceed to the final vector.
+                                </p>
+                            `;
+                            // Manual advance
+                            activateNextPhase(currentSection, nextSection, '6', color);
+                            return;
+                        }
 
-                if (decodedMessage === pathSolution) {
-                    answerInput3.disabled = true;
-                    submitButton3.disabled = true;
-                    submitButton3.classList.replace('submit-btn', 'bg-gray-700');
-                    submitButton3.innerText = "[ PATH RESOLVED ]";
-                    
-                    activeLink.textContent = pathSolution;
-                    activeLink.href = pathSolution;
-                    
-                    // Activating the new Phase 4 (Lexicon/Book Cipher)
-                    activateNextPhase(phase3Section, phase4Section, '4', 'neon-yellow');
+                        // Standard advance for other phases
+                        activateNextPhase(currentSection, nextSection, phaseNum + 1, color);
 
-                } else {
-                    showMessage("DECRYPTION FAILED. SEQUENCE MISMATCH. Check the ASCII table and case. Don't give up!", false, 'border-neon-yellow');
-                }
-            };
-
-            submitButton3.addEventListener('click', checkAnswer3);
-            answerInput3.addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter' && !submitButton3.disabled) checkAnswer3(); 
-            });
-
-
-            // --- Phase 4 (Lexicon): (MISSION) -> Phase 5 (Answer: MISSION) ---
-            const checkAnswer4 = () => {
-                const targetPhrase = 'MISSION'; // Original answer from Phase 5
-                const decodedMessage = answerInput4.value.trim().toUpperCase().replace(/[^A-Z]/g, '');
-                if (decodedMessage === targetPhrase) {
-                    answerInput4.disabled = true;
-                    submitButton4.disabled = true;
-                    submitButton4.classList.replace('submit-btn', 'bg-gray-700');
-                    submitButton4.innerText = "[ VERIFIED ]"; // Original text from Phase 5
-                    
-                    // Activating the new Phase 5 (A1Z26)
-                    activateNextPhase(phase4Section, phase5Section, '5', 'neon-green');
-                    
-                } else {
-                    showMessage("DECRYPTION FAILED. KEY MISMATCH. Keep pushing, you can do this!", false, 'border-neon-purple'); // Original Phase 5 color
-                }
-            };
-            submitButton4.addEventListener('click', checkAnswer4);
-            answerInput4.addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter' && !submitButton4.disabled) checkAnswer4(); 
-            });
-
-
-            // --- Phase 5 (A1Z26): (ELITE) -> Phase 6 (Answer: ELITE) ---
-            const checkAnswer5 = () => {
-                const targetPhrase = 'ELITE'; // Original answer from Phase 4
-                const decodedMessage = answerInput5.value.trim().toUpperCase().replace(/[^A-Z]/g, '');
-                if (decodedMessage === targetPhrase) {
-                    answerInput5.disabled = true;
-                    submitButton5.disabled = true;
-                    submitButton5.classList.replace('submit-btn', 'bg-gray-700');
-                    submitButton5.innerText = "[ ALFA LOCKED ]"; // Original text from Phase 4
-                    
-                    // --- Custom success message and Phase 6 activation ---
-                    
-                    // 1. Show custom success message in resultOutput 
-                    resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-purple');
-                    resultOutput.classList.add('bg-terminal-black', 'border', 'border-neon-green', 'rounded-none', 'animate-fade-in');
-
-                    if (activeLink.href === pathSolution) { 
-                        activeLink.classList.remove('text-neon-purple'); 
-                        decryptedLinkDisplay.classList.add('shining-link'); 
-                        decryptedLinkDisplay.classList.remove('hidden', 'opacity-0');
-                        decryptedLinkDisplay.classList.add('opacity-100');
+                    } else {
+                        const errorMsg = (phaseNum === 1) ? "ACCESS DENIED. INCORRECT CODE SOURCE." : 
+                                         (phaseNum === 6) ? "FINAL ACCESS DENIED. KEY MISMATCH. This is the final step, give it everything you've got." :
+                                         "DECRYPTION FAILED. SEQUENCE MISMATCH. Check the details and try again.";
+                        showMessage(errorMsg, false, color);
                     }
+                };
 
-                    resultOutput.innerHTML = `
-                        <p class="text-base text-neon-green">[ALPHABETIC ENCODING COMPLETE]</p>
-                        <p class="text-sm text-neon-yellow mb-2">
-                            **SUCCESS.** The code is fully decrypted. Proceed to the final vector.
-                        </p>
-                    `;
-
-                    // 2. Manually advance to Phase 6 state
-                    phase5Section.classList.add('disabled-phase');
-                    phase6Section.classList.remove('hidden');
-                    phase6Section.classList.remove('disabled-phase');
-                    
-                    setTimeout(() => {
-                        phase6Section.classList.add('opacity-100');
-                        phase6Section.classList.remove('opacity-0');
-                        statusHeader.innerHTML = `[PHASE 6]`; 
-                        protocolStatus.innerHTML = `> STATUS: ACTIVE <span class="cursor quick-blink">_</span>`;
-                        playSound(successSound);
-                         // Manual activation logic for Phase 6 clues
-                        cipherCode6.classList.add('shining-link');
-                        secondaryClue6.classList.remove('visible'); 
-                        setTimeout(() => {
-                            secondaryClue6.classList.add('visible');
-                        }, 60000); // Keeps 60 seconds
-                    }, 50);
-
-                } else {
-                    showMessage("DECRYPTION FAILED. NUMERIC MISMATCH. Revisit the value of each letter.", false, 'border-neon-green'); // Original Phase 4 color
-                }
-            };
-            submitButton5.addEventListener('click', checkAnswer5);
-            answerInput5.addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter' && !submitButton5.disabled) checkAnswer5(); 
-            });
-
-
-            // --- Phase 6: Masonic Cipher (AGENT) -> Final Success (Answer: AGENT) ---
-            const checkAnswer6 = () => {
-                const targetPhrase = 'AGENT'; 
-                const decodedMessage = answerInput6.value.trim().toUpperCase().replace(/[^A-Z]/g, '');
-
-                if (decodedMessage === targetPhrase) {
-                    answerInput6.disabled = true;
-                    submitButton6.disabled = true;
-                    submitButton6.classList.replace('submit-btn', 'bg-gray-700');
-                    submitButton6.innerText = "[ PROTOCOL COMPLETE ]";
-                    phase6Section.classList.add('opacity-50');
-                    playSound(successSound);
-
-                    // Final Success Message - Corrected problematic symbols
-                    resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-yellow');
-                    resultOutput.classList.add('bg-terminal-black', 'border-4', 'border-neon-purple', 'rounded-none', 'animate-fade-in');
-
-                    resultOutput.innerHTML = `
-                        <p class="text-xl font-bold text-neon-green mb-4">
-                            [ FULL PROTOCOL DECRYPTED ]
-                        </p>
-                        <p class="text-3xl font-extrabold text-neon-yellow tracking-wider mb-6">
-                            ${targetPhrase}
-                        </p>
-                        <p class="text-2xl text-neon-green font-bold mb-4">
-                            AGENT AUTHORIZED. YOUR PROFILE HAS BEEN ACCEPTED INTO THE CIRCLE.
-                        </p>
-                        <p class="text-5xl font-extrabold text-neon-green tracking-widest whitespace-nowrap">
-                            MISSION ACCOMPLISHED <span class="text-5xl text-neon-yellow">&#x2714;</span>
-                        </p>
-                    `;
-
-                } else {
-                    showMessage("FINAL ACCESS DENIED. KEY MISMATCH. This is the final step, give it everything you've got.", false, 'border-neon-yellow');
-                }
+                buttonElement.addEventListener('click', checkAnswer);
+                inputElement.addEventListener('keypress', (e) => { 
+                    if (e.key === 'Enter' && !buttonElement.disabled) checkAnswer(); 
+                });
             };
 
-            submitButton6.addEventListener('click', checkAnswer6);
-            answerInput6.addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter' && !submitButton6.disabled) checkAnswer6(); 
-            });
+            // Setup for all phases (using the refactored function)
+            setupPhaseLogic(1, 'moon', 'neon-green', 'phase2Section', 'answerInput1', 'submitButton1', (val) => val.trim().toLowerCase().replace(/[^a-z]/g, ''));
+            setupPhaseLogic(2, 'CYBER', 'neon-blue', 'phase3Section', 'answerInput2', 'submitButton2', (val) => val.trim().toUpperCase().replace(/[^A-Z]/g, ''));
+            setupPhaseLogic(3, pathSolution, 'neon-yellow', 'phase4Section', 'answerInput3', 'submitButton3', (val) => val.trim().toLowerCase());
+            setupPhaseLogic(4, 'ELITE', 'neon-green', 'phase5Section', 'answerInput4', 'submitButton4', (val) => val.trim().toUpperCase().replace(/[^A-Z]/g, ''));
+            setupPhaseLogic(5, 'MISSION', 'neon-purple', 'phase6Section', 'answerInput5', 'submitButton5', (val) => val.trim().toUpperCase().replace(/[^A-Z]/g, ''));
+            setupPhaseLogic(6, 'AGENT', 'neon-yellow', null, 'answerInput6', 'submitButton6', (val) => val.trim().toUpperCase().replace(/[^A-Z]/g, ''));
 
         });
     </script>
