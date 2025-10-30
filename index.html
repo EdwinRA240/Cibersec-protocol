@@ -39,7 +39,7 @@
             text-shadow: 0 0 2px rgba(0, 255, 0, 0.5);
             overflow-y: auto;
             /* Aumentamos el tamaño base de la letra para móviles */
-            font-size: 1.25rem; /* Ajustado a un tamaño más grande */
+            font-size: 1.25rem; 
             /* Subtle Background Noise/Scanline Effect */
             background-image: linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px), 
                               linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
@@ -48,7 +48,7 @@
         /* Ajustes para pantallas más grandes, para evitar que sea *demasiado* grande */
         @media (min-width: 768px) { /* md breakpoint (tablets y desktop) */
             body {
-                font-size: 1.15rem; /* Ligeramente más pequeño en pantallas grandes */
+                font-size: 1.15rem; 
             }
         }
 
@@ -118,7 +118,7 @@
         
         /* Revised Subtle Protocol List Style (for mobile visibility) */
         .subtle-protocol-chain {
-            font-size: 0.9rem; /* Ligeramente más grande */
+            font-size: 0.9rem; 
             opacity: 0.2; 
             transition: opacity 0.3s;
             overflow: hidden; 
@@ -173,15 +173,19 @@
 
         /* New Clue Style (without aggressive shine) */
         .secondary-clue {
-            opacity: 0;
+            opacity: 0.05; 
             transition: opacity 0.5s ease-in;
             font-style: italic;
             color: #ffff00; 
             font-weight: bold;
         }
-        .secondary-clue.visible {
-            opacity: 1;
-            text-shadow: 0 0 2px #ffff00; 
+        
+        /* FIX FINAL DE ESPECIFICIDAD: Usamos IDs para forzar la opacidad 1 para TODAS las pistas*/
+        #secondaryClue3.visible, 
+        #secondaryClue5.visible, 
+        #secondaryClue6.visible {
+            opacity: 1 !important; 
+            text-shadow: 0 0 5px #ffff00, 0 0 10px rgba(255,255,0,0.8); 
         }
     </style>
 </head>
@@ -526,10 +530,10 @@
                 
                 if (isSuccess) {
                     resultOutput.classList.add(`border-${borderColorClass}`);
-                    resultOutput.innerHTML = `<p class="text-xl sm:text-base text-neon-green">[STATUS: OK] ${message}</p>`; /* Ajuste de tamaño */
+                    resultOutput.innerHTML = `<p class="text-xl sm:text-base text-neon-green">[STATUS: OK] ${message}</p>`; 
                 } else {
                     resultOutput.classList.add('border-glitch-red');
-                    resultOutput.innerHTML = `<p class="text-xl sm:text-base text-glitch-red">[ERROR] ${message}</p>`; /* Ajuste de tamaño */
+                    resultOutput.innerHTML = `<p class="text-xl sm:text-base text-glitch-red">[ERROR] ${message}</p>`; 
                 }
                 
                 if (!isSuccess) {
@@ -550,20 +554,18 @@
                     setTimeout(() => {
                         nextPhase.classList.add('opacity-100');
                         nextPhase.classList.remove('opacity-0');
-                        statusHeader.innerHTML = `<span class="text-xl sm:text-lg">[PHASE ${phaseNumber}]</span>`; /* Ajuste de tamaño */
-                        protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; /* Ajuste de tamaño */
+                        statusHeader.innerHTML = `<span class="text-xl sm:text-lg">[PHASE ${phaseNumber}]</span>`; 
+                        protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; 
                         
-                        const clueDelay = 15000; 
+                        // Retardo de 60 segundos (60000ms) para las pistas secundarias
+                        const clueDelay = 60000; 
                         
                         if (phaseNumber === '3') {
-                            secondaryClue3.classList.remove('visible'); 
                             setTimeout(() => { secondaryClue3.classList.add('visible'); }, clueDelay); 
                         } else if (phaseNumber === '5') {
-                            secondaryClue5.classList.remove('visible'); 
                             setTimeout(() => { secondaryClue5.classList.add('visible'); }, clueDelay); 
                         } else if (phaseNumber === '6') {
                             if (cipherImage6) { cipherImage6.classList.add('shining-image'); }
-                            secondaryClue6.classList.remove('visible'); 
                             setTimeout(() => { secondaryClue6.classList.add('visible'); }, clueDelay); 
                         }
 
@@ -582,7 +584,6 @@
                 resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-yellow');
                 resultOutput.classList.add('bg-terminal-black', 'border-4', 'border-neon-purple', 'rounded-none', 'animate-fade-in');
 
-                // CORRECCIÓN PARA MÓVIL: CLASES RESPONSIVAS Y SÍMBOLO CAMBIADO
                 resultOutput.innerHTML = `
                     <p class="text-2xl sm:text-xl font-bold text-neon-green mb-4">
                         [ FULL PROTOCOL DECRYPTED ]
@@ -607,8 +608,8 @@
                 setTimeout(() => {
                     mainContainer.classList.add('opacity-100');
                     mainContainer.classList.remove('opacity-0');
-                    statusHeader.innerHTML = `<span class="text-xl sm:text-lg">[PHASE 1]</span>`; /* Ajuste de tamaño */
-                    protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; /* Ajuste de tamaño */
+                    statusHeader.innerHTML = `<span class="text-xl sm:text-lg">[PHASE 1]</span>`; 
+                    protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; 
                 }, 50);
             });
 
