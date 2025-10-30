@@ -171,21 +171,21 @@
             margin: 0 auto; 
         }
 
-        /* New Clue Style (without aggressive shine) */
+        /* Modificación para las pistas secundarias (CLUES) */
         .secondary-clue {
             opacity: 0.05; 
             transition: opacity 0.5s ease-in;
-            font-style: italic;
-            color: #ffff00; 
-            font-weight: bold;
+            /* Se eliminó font-style: italic; */
+            /* Se eliminó font-weight: bold; */
+            color: #ffff00; /* Mantenemos el color amarillo para destacarse sutilmente */
         }
         
-        /* FIX FINAL DE ESPECIFICIDAD: Usamos IDs para forzar la opacidad 1 para TODAS las pistas*/
+        /* Ajuste FINAL: Asegurar que las pistas se muestren sin brillo cuando se activan */
         #secondaryClue3.visible, 
         #secondaryClue5.visible, 
         #secondaryClue6.visible {
             opacity: 1 !important; 
-            text-shadow: 0 0 5px #ffff00, 0 0 10px rgba(255,255,0,0.8); 
+            /* Importante: Eliminamos el text-shadow de aquí para quitar el efecto de brillo fuerte */
         }
     </style>
 </head>
@@ -307,8 +307,8 @@
                     [CLUE]: "You're close. The path is numbered in the standard system. Decode the stream of integers into their sequence."
                 </p>
                 
-                <p id="secondaryClue3" class="text-lg sm:text-base text-neon-yellow mt-0 mb-4 font-bold text-center secondary-clue">
-                    **Do you know the ASCII code? It could help you!**
+                <p id="secondaryClue3" class="text-lg sm:text-base text-neon-yellow mt-0 mb-4 text-center secondary-clue">
+                    Do you know the ASCII code? It could help you!
                 </p>
 
                 <p class="text-lg sm:text-base text-neon-purple mb-2 font-bold text-center">
@@ -391,7 +391,7 @@
                     >> THIS PHASE REQUIRES CONTEXT.
                 </p>
                 
-                <p id="secondaryClue5" class="text-lg sm:text-base text-neon-yellow mt-2 mb-4 font-bold text-center secondary-clue">
+                <p id="secondaryClue5" class="text-lg sm:text-base text-neon-yellow mt-2 mb-4 text-center secondary-clue">
                     The key is the word, the lock is the index.
                 </p>
                 
@@ -434,7 +434,7 @@
                     >> THIS IS IT. Trust the symbols of the brotherhood.
                 </p>
                 
-                <p id="secondaryClue6" class="text-lg sm:text-base text-neon-yellow mt-2 mb-4 font-bold text-center secondary-clue">
+                <p id="secondaryClue6" class="text-lg sm:text-base text-neon-yellow mt-2 mb-4 text-center secondary-clue">
                     "Sometimes, returning to your past is the solution."
                 </p>
 
@@ -446,7 +446,7 @@
                 </div>
 
                 <div class="text-center mb-6">
-                    <img id="cipherImage6" src="/AGENT.png" alt="Pigpen Cipher" class="shining-image w-2/3 md:w-1/2 lg:w-1/3 mx-auto p-3 bg-gray-900/50 rounded-none shadow-inner shadow-neon-purple/30 border-r-4 border-l-4 border-neon-yellow" style="image-rendering: pixelated;"/>
+                    <img id="cipherImage6" src="AGENT.png" alt="Pigpen Cipher" class="shining-image w-2/3 md:w-1/2 lg:w-1/3 mx-auto p-3 bg-gray-900/50 rounded-none shadow-inner shadow-neon-purple/30 border-r-4 border-l-4 border-neon-yellow" style="image-rendering: pixelated;"/>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3">
@@ -557,8 +557,8 @@
                         statusHeader.innerHTML = `<span class="text-xl sm:text-lg">[PHASE ${phaseNumber}]</span>`; 
                         protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; 
                         
-                        // Retardo de 60 segundos (60000ms) para las pistas secundarias
-                        const clueDelay = 60000; 
+                        // Retardo de 5 segundos (5000ms) para las pistas secundarias
+                        const clueDelay = 5000; 
                         
                         if (phaseNumber === '3') {
                             setTimeout(() => { secondaryClue3.classList.add('visible'); }, clueDelay); 
@@ -566,6 +566,8 @@
                             setTimeout(() => { secondaryClue5.classList.add('visible'); }, clueDelay); 
                         } else if (phaseNumber === '6') {
                             if (cipherImage6) { cipherImage6.classList.add('shining-image'); }
+                            
+                            // Esta línea activa la visibilidad de la pista de la fase 6
                             setTimeout(() => { secondaryClue6.classList.add('visible'); }, clueDelay); 
                         }
 
@@ -659,7 +661,7 @@
                             resultOutput.innerHTML = `
                                 <p class="text-xl sm:text-base text-neon-green">[CONTEXTUAL INDEXING VERIFIED]</p>
                                 <p class="text-xl sm:text-base text-neon-yellow mb-2">
-                                    **SUCCESS.** The indices are aligned. Proceed to the final vector.
+                                    SUCCESS. The indices are aligned. Proceed to the final vector.
                                 </p>
                             `;
                             activateNextPhase(currentSection, nextSection, '6', color);
