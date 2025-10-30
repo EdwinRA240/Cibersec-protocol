@@ -175,8 +175,6 @@
         .secondary-clue {
             opacity: 0.05; 
             transition: opacity 0.5s ease-in;
-            /* Se eliminó font-style: italic; */
-            /* Se eliminó font-weight: bold; */
             color: #ffff00; /* Mantenemos el color amarillo para destacarse sutilmente */
         }
         
@@ -185,7 +183,7 @@
         #secondaryClue5.visible, 
         #secondaryClue6.visible {
             opacity: 1 !important; 
-            /* Importante: Eliminamos el text-shadow de aquí para quitar el efecto de brillo fuerte */
+            /* Importante: Quitamos el text-shadow de aquí para quitar el efecto de brillo fuerte */
         }
     </style>
 </head>
@@ -203,7 +201,7 @@
             <h2 class="text-xl font-bold text-neon-blue mb-4">
                 [ ACCESS GRANTED: AGENT REACQUISITION ]
             </h2>
-            <p class="text-xl sm:text-lg text-neon-green mb-6 border-b border-neon-green/50 pb-4">
+            <p class="text-xl sm:text-lg text-neon-green mb-4 border-b border-neon-green/50 pb-4">
                 [ PROTOCOL_RESUMED_7.EXE ]
             </p>
             <p class="text-lg sm:text-base text-neon-green mb-8">
@@ -558,16 +556,18 @@
                         protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; 
                         
                         // Retardo de 5 segundos (5000ms) para las pistas secundarias
-                        const clueDelay = 5000; 
+                        const clueDelay = 60000; 
                         
-                        if (phaseNumber === '3') {
+                        // FIX APLICADO: Se cambió la comparación a integer para que las pistas se muestren correctamente.
+                        if (phaseNumber === 3) {
                             setTimeout(() => { secondaryClue3.classList.add('visible'); }, clueDelay); 
-                        } else if (phaseNumber === '5') {
+                        } else if (phaseNumber === 5) {
                             setTimeout(() => { secondaryClue5.classList.add('visible'); }, clueDelay); 
-                        } else if (phaseNumber === '6') {
+                        } else if (phaseNumber === 6) {
+                            // Este es el efecto de brillo de la imagen que hace que la Fase 6 parezca "diferente"
                             if (cipherImage6) { cipherImage6.classList.add('shining-image'); }
                             
-                            // Esta línea activa la visibilidad de la pista de la fase 6
+                            // Activación de la pista de texto (igual que las demás, sin brillo de texto)
                             setTimeout(() => { secondaryClue6.classList.add('visible'); }, clueDelay); 
                         }
 
@@ -646,6 +646,7 @@
                                                      "[ VERIFIED ]";
                         }
                         
+                        // Lógica especial para Fase 5
                         if (phaseNum === 5) {
                             showMessage("PROTOCOL ACCEPTED. ADVANCING TO NEXT ENCRYPTION LAYER. Keep up the good work.", true, color);
                             resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-yellow');
@@ -664,10 +665,12 @@
                                     SUCCESS. The indices are aligned. Proceed to the final vector.
                                 </p>
                             `;
-                            activateNextPhase(currentSection, nextSection, '6', color);
+                            // Se llama con 6 para activar la Fase 6
+                            activateNextPhase(currentSection, nextSection, 6, color);
                             return;
                         }
 
+                        // Llamada principal a la siguiente fase (Fases 1, 2, 3, 4)
                         activateNextPhase(currentSection, nextSection, phaseNum + 1, color);
 
                     } else {
