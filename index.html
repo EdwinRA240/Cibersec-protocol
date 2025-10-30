@@ -23,7 +23,6 @@
                         'glitch-cyan': '#00aaff',
                     },
                     fontFamily: {
-                        // Usamos VT323 como la fuente principal
                         mono: ['VT323', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
                     },
                 }
@@ -33,18 +32,26 @@
     <style>
         /* Base Styles */
         body {
-            /* 1. TIPOGRAFÍA APLICADA EN CSS */
             font-family: 'VT323', monospace;
             min-height: 100vh;
             background-color: #050505;
             color: #00ff00; 
             text-shadow: 0 0 2px rgba(0, 255, 0, 0.5);
             overflow-y: auto;
+            /* Aumentamos el tamaño base de la letra para móviles */
+            font-size: 1.25rem; /* Ajustado a un tamaño más grande */
             /* Subtle Background Noise/Scanline Effect */
             background-image: linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px), 
                               linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
             background-size: 100% 4px, 4px 100%;
         }
+        /* Ajustes para pantallas más grandes, para evitar que sea *demasiado* grande */
+        @media (min-width: 768px) { /* md breakpoint (tablets y desktop) */
+            body {
+                font-size: 1.15rem; /* Ligeramente más pequeño en pantallas grandes */
+            }
+        }
+
         .terminal-window {
             background-color: rgba(0, 0, 0, 0.9);
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
@@ -111,7 +118,7 @@
         
         /* Revised Subtle Protocol List Style (for mobile visibility) */
         .subtle-protocol-chain {
-            font-size: 0.75rem; 
+            font-size: 0.9rem; /* Ligeramente más grande */
             opacity: 0.2; 
             transition: opacity 0.3s;
             overflow: hidden; 
@@ -192,10 +199,10 @@
             <h2 class="text-xl font-bold text-neon-blue mb-4">
                 [ ACCESS GRANTED: AGENT REACQUISITION ]
             </h2>
-            <p class="text-lg text-neon-green mb-6 border-b border-neon-green/50 pb-4">
+            <p class="text-xl sm:text-lg text-neon-green mb-6 border-b border-neon-green/50 pb-4">
                 [ PROTOCOL_RESUMED_7.EXE ]
             </p>
-            <p class="text-xs text-neon-green mb-8">
+            <p class="text-lg sm:text-base text-neon-green mb-8">
                 **This is the ultimate test.** We are **recruiting the next generation of elite**. Decrypt this security chain to verify your aptitude. The protocol is active; use your intelligence and resources to find the solution. **Prove you are the one percent.**
             </p>
             
@@ -211,32 +218,32 @@
     <div id="mainContainer" class="w-full max-w-xl hidden opacity-0">
         <div class="terminal-window p-6 sm:p-8 rounded-none">
             
-            <div class="mb-4 text-xs text-neon-blue border-b border-neon-blue/20 pb-2 subtle-protocol-chain">
+            <div class="mb-4 text-base sm:text-sm text-neon-blue border-b border-neon-blue/20 pb-2 subtle-protocol-chain">
                 // ACTIVE_CHAIN_HASH: <span class="text-neon-yellow">Riddle</span> <span class="text-neon-yellow">RailFence</span> <span class="text-neon-yellow">ASCII</span> <span class="text-neon-yellow">A1Z26</span> <span class="text-neon-yellow">Book</span> <span class="text-neon-yellow">Pigpen</span>.
             </div>
 
             <div class="flex justify-between items-center mb-6 border-b border-neon-green pb-2">
-                <span id="statusHeader" class="text-neon-blue font-bold uppercase">
+                <span id="statusHeader" class="text-xl sm:text-lg text-neon-blue font-bold uppercase">
                     [SYSTEM_LOG]
                 </span>
-                <span id="protocolStatus" class="text-neon-green">
+                <span id="protocolStatus" class="text-xl sm:text-lg text-neon-green">
                     > STATUS: PENDING_AUTH <span class="cursor quick-blink">_</span>
                 </span>
             </div>
 
             <div id="phase1Section">
-                <h2 class="text-xl font-bold text-neon-green mb-4 text-center">
+                <h2 class="text-2xl sm:text-xl font-bold text-neon-green mb-4 text-center">
                     [PHASE 1: THE FIRST LIGHT]
                 </h2>
-                <p class="mb-6 text-sm text-neon-green">
+                <p class="mb-6 text-xl sm:text-base text-neon-green">
                     <span class="text-neon-blue">_MESSAGE_START:</span><br>
                     "The project requires maximum adaptability. Embrace lateral vision, cultural knowledge, and your intuition. This first protocol breaks computational logic. Trust yourself."
                 </p>
                 <div class="mb-6 pt-4 border-t border-neon-green/50">
-                    <p class="text-base text-neon-green">
+                    <p class="text-xl sm:text-lg text-neon-green">
                         [QUERY_01]: "I am a body in the sky that shrinks and grows. I give you light at night, though my shine is borrowed. What am I?"
                     </p>
-                    <p class="text-xs text-neon-yellow mt-2 font-bold">
+                    <p class="text-lg sm:text-base text-neon-yellow mt-2 font-bold">
                         >> GOOD LUCK, AGENT. The first sequence awaits your intellect.
                     </p>
                 </div>
@@ -245,11 +252,11 @@
                         type="text"
                         id="answerInput1"
                         placeholder="> ENTER CELESTIAL CODE..."
-                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-green uppercase"
+                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-green uppercase text-xl sm:text-lg"
                     >
                     <button
                         id="submitButton1"
-                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
+                        class="submit-btn py-3 px-6 rounded-none text-xl sm:text-lg transition duration-300"
                     >
                         [ EXECUTE ]
                     </button>
@@ -257,18 +264,18 @@
             </div>
 
             <div id="phase2Section" class="mt-8 pt-6 border-t border-neon-blue disabled-phase hidden opacity-0 transition duration-1000">
-                <h2 class="text-xl font-bold text-neon-blue mb-4 text-center">
+                <h2 class="text-2xl sm:text-xl font-bold text-neon-blue mb-4 text-center">
                     [PHASE 2: REARRANGING DATA]
                 </h2>
-                <p class="text-sm text-neon-yellow mb-4 text-center font-bold">
+                <p class="text-xl sm:text-base text-neon-yellow mb-4 text-center font-bold">
                     [CLUE]: "I do not substitute; I merely rearrange. To read me, you must zig-zag across two silent tracks."
                 </p>
                 
-                <p class="text-xs text-neon-green mb-2 font-bold text-center">
+                <p class="text-lg sm:text-base text-neon-green mb-2 font-bold text-center">
                     >> EXCELLENT WORK. Focus on the structure of the paths.
                 </p>
                 <div class="text-center mb-6">
-                    <p id="cipherCode2" class="text-2xl sm:text-3xl font-mono tracking-widest text-neon-blue p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-green/30 whitespace-nowrap border-r-4 border-l-4 border-neon-blue">
+                    <p id="cipherCode2" class="text-3xl sm:text-3xl font-mono tracking-widest text-neon-blue p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-green/30 whitespace-nowrap border-r-4 border-l-4 border-neon-blue">
                         C Y B R E
                     </p>
                 </div>
@@ -277,11 +284,11 @@
                         type="text"
                         id="answerInput2"
                         placeholder="> ENTER DECRYPTED WORD..."
-                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-blue uppercase"
+                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-blue uppercase text-xl sm:text-lg"
                     >
                     <button
                         id="submitButton2"
-                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
+                        class="submit-btn py-3 px-6 rounded-none text-xl sm:text-lg transition duration-300"
                     >
                         [ DECODE ]
                     </button>
@@ -289,29 +296,29 @@
             </div>
 
             <div id="phase3Section" class="mt-8 pt-6 border-t border-neon-yellow disabled-phase hidden opacity-0 transition duration-1000">
-                <h2 class="text-xl font-bold text-neon-yellow mb-4 text-center">
+                <h2 class="text-2xl sm:text-xl font-bold text-neon-yellow mb-4 text-center">
                     [PHASE 3: THE CRITICAL PATH]
                 </h2>
-                <p class="text-sm text-neon-green mb-4 text-center font-bold">
+                <p class="text-xl sm:text-base text-neon-green mb-4 text-center font-bold">
                     [CLUE]: "You're close. The path is numbered in the standard system. Decode the stream of integers into their sequence."
                 </p>
                 
-                <p id="secondaryClue3" class="text-sm text-neon-yellow mt-0 mb-4 font-bold text-center secondary-clue">
+                <p id="secondaryClue3" class="text-lg sm:text-base text-neon-yellow mt-0 mb-4 font-bold text-center secondary-clue">
                     **Do you know the ASCII code? It could help you!**
                 </p>
 
-                <p class="text-xs text-neon-purple mb-2 font-bold text-center">
+                <p class="text-lg sm:text-base text-neon-purple mb-2 font-bold text-center">
                     >> WARNING: EXACT INPUT REQUIRED. The sequence holds a direct address.
                 </p>
                 
                 <div class="text-center mb-6">
-                    <p id="cipherCode3" class="text-base sm:text-xl font-mono tracking-widest text-neon-yellow p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-purple/30 whitespace-normal border-r-4 border-l-4 border-neon-yellow">
+                    <p id="cipherCode3" class="text-xl sm:text-xl font-mono tracking-widest text-neon-yellow p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-purple/30 whitespace-normal border-r-4 border-l-4 border-neon-yellow">
                         104 116 116 112 115 58 47 47 110 57 46 99 108 47 99 50 106 115 117
                     </p>
-                    <p id="decryptedLinkDisplay" class="text-base text-neon-yellow font-bold mt-4 hidden opacity-0 transition duration-500 ease-in-out">
+                    <p id="decryptedLinkDisplay" class="text-lg sm:text-base text-neon-yellow font-bold mt-4 hidden opacity-0 transition duration-500 ease-in-out">
                         Click here: <a id="activeLink" href="#" target="_blank" class="text-neon-purple">N/A</a> 
                     </p>
-                    <p class="text-neon-green text-xs mt-2">
+                    <p class="text-base sm:text-sm text-neon-green mt-2">
                         (Enter the decrypted path exactly as read, no spaces or uppercase.)
                     </p>
                 </div>
@@ -321,11 +328,11 @@
                         type="text"
                         id="answerInput3"
                         placeholder="> ENTER DECRYPTED PATH..."
-                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-yellow lowercase"
+                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-yellow lowercase text-xl sm:text-lg"
                     >
                     <button
                         id="submitButton3"
-                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
+                        class="submit-btn py-3 px-6 rounded-none text-xl sm:text-lg transition duration-300"
                     >
                         [ RESOLVE PATH ]
                     </button>
@@ -333,23 +340,23 @@
             </div>
             
             <div id="phase4Section" class="mt-8 pt-6 border-t border-neon-green disabled-phase hidden opacity-0 transition duration-1000">
-                <h2 class="text-xl font-bold text-neon-green mb-4 text-center">
+                <h2 class="text-2xl sm:text-xl font-bold text-neon-green mb-4 text-center">
                     [PHASE 4: THE SIMPLE TRUTH]
                 </h2>
-                <p class="text-sm text-neon-yellow mb-4 text-center font-bold">
+                <p class="text-xl sm:text-base text-neon-yellow mb-4 text-center font-bold">
                     [CLUE]: "I am the language of position. To read me, you must speak the sequence of the first 26."
                 </p>
                 
-                <p class="text-xs text-neon-blue mb-2 font-bold text-center">
+                <p class="text-lg sm:text-base text-neon-blue mb-2 font-bold text-center">
                     >> REMINDER: You have solved this type of challenge before. Recall your basic cipher knowledge.
                 </p>
 
-                <p class="text-xs text-neon-yellow mb-2 font-bold text-center">
+                <p class="text-lg sm:text-base text-neon-yellow mb-2 font-bold text-center">
                     >> THIS IS A DIRECT CALCULATION.
                 </p>
                 
                 <div class="text-center mb-6">
-                    <p id="cipherCode4" class="text-2xl sm:text-3xl font-mono tracking-widest text-neon-green p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-green">
+                    <p id="cipherCode4" class="text-3xl sm:text-3xl font-mono tracking-widest text-neon-green p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-green">
                         05 12 09 20 05
                     </p>
                 </div>
@@ -359,32 +366,32 @@
                         type="text"
                         id="answerInput4"
                         placeholder="> ENTER ALPHABETIC KEY (NO SPACES)..."
-                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-green uppercase"
+                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-green uppercase text-xl sm:text-lg"
                     >
                     <button
                         id="submitButton4"
-                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
+                        class="submit-btn py-3 px-6 rounded-none text-xl sm:text-lg transition duration-300"
                     >
                         [ DECODE ALFA ]
                     </button>
                 </div>
             </div>
             <div id="phase5Section" class="mt-8 pt-6 border-t border-neon-purple disabled-phase hidden opacity-0 transition duration-1000">
-                <h2 class="text-xl font-bold text-neon-purple mb-4 text-center">
+                <h2 class="text-2xl sm:text-xl font-bold text-neon-purple mb-4 text-center">
                     [PHASE 5: CONTEXTUAL INDEXING]
                 </h2>
-                <p class="text-sm text-neon-yellow mb-4 text-center font-bold">
+                <p class="text-xl sm:text-base text-neon-yellow mb-4 text-center font-bold">
                     [CLUE]: "I speak not with letters, but with indices. My message is hidden within the pages we both share."
                 </p>
-                <p class="text-xs text-neon-blue mb-2 font-bold text-center">
+                <p class="text-lg sm:text-base text-neon-blue mb-2 font-bold text-center">
                     >> THIS PHASE REQUIRES CONTEXT.
                 </p>
                 
-                <p id="secondaryClue5" class="text-xs text-neon-yellow mt-2 font-bold text-center secondary-clue">
+                <p id="secondaryClue5" class="text-lg sm:text-base text-neon-yellow mt-2 mb-4 font-bold text-center secondary-clue">
                     The key is the word, the lock is the index.
                 </p>
                 
-                <div class="bg-gray-900/50 p-4 mb-6 border border-neon-purple/50 text-xs leading-5">
+                <div class="bg-gray-900/50 p-4 mb-6 border border-neon-purple/50 text-lg sm:text-base leading-5">
                     <span class="text-neon-purple font-bold">SOURCE_TEXT (CYBER_MANIFESTO_1.0):</span><br>
                     <p id="sourceText" class="whitespace-normal">
                         There are systems everywhere. To really win, the agent must understand that the best defense is often the ability to hide in plain sight. Our future is in the network, not in the shadows. Replicate your presence.
@@ -392,7 +399,7 @@
                 </div>
 
                 <div class="text-center mb-6">
-                    <p id="cipherCode5" class="text-2xl sm:text-3xl font-mono tracking-widest text-neon-purple p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-purple">
+                    <p id="cipherCode5" class="text-3xl sm:text-3xl font-mono tracking-widest text-neon-purple p-3 bg-gray-900/50 rounded-none inline-block shadow-inner shadow-neon-blue/30 whitespace-nowrap border-r-4 border-l-4 border-neon-purple">
                         10 16 3 34 27 25 30
                     </p>
                 </div>
@@ -402,32 +409,32 @@
                         type="text"
                         id="answerInput5"
                         placeholder="> ENTER DECRYPTED PASSWORD (NO SPACES)..."
-                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-purple uppercase"
+                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-purple uppercase text-xl sm:text-lg"
                     >
                     <button
                         id="submitButton5"
-                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
+                        class="submit-btn py-3 px-6 rounded-none text-xl sm:text-lg transition duration-300"
                     >
                         [ VERIFY ]
                     </button>
                 </div>
             </div>
             <div id="phase6Section" class="mt-8 pt-6 border-t border-neon-yellow disabled-phase hidden opacity-0 transition duration-1000">
-                <h2 class="text-xl font-bold text-neon-yellow mb-4 text-center">
+                <h2 class="text-2xl sm:text-xl font-bold text-neon-yellow mb-4 text-center">
                     [PHASE 6: THE FINAL ENCRYPTION]
                 </h2>
-                <p class="text-sm text-neon-green mb-4 text-center font-bold">
+                <p class="text-xl sm:text-base text-neon-green mb-4 text-center font-bold">
                     >> FINAL KEY REQUIRED. Confirm your loyalty with the ancient protocol.
                 </p>
-                <p class="text-xs text-neon-blue mb-2 font-bold text-center">
+                <p class="text-lg sm:text-base text-neon-blue mb-2 font-bold text-center">
                     >> THIS IS IT. Trust the symbols of the brotherhood.
                 </p>
                 
-                <p id="secondaryClue6" class="text-xs text-neon-yellow mt-2 mb-4 font-bold text-center secondary-clue">
+                <p id="secondaryClue6" class="text-lg sm:text-base text-neon-yellow mt-2 mb-4 font-bold text-center secondary-clue">
                     "Sometimes, returning to your past is the solution."
                 </p>
 
-                <div class="bg-gray-900/50 p-4 mb-6 border border-neon-yellow/50 text-xs leading-5">
+                <div class="bg-gray-900/50 p-4 mb-6 border border-neon-yellow/50 text-lg sm:text-base leading-5">
                     <span class="text-neon-yellow font-bold">FINAL KEY REFERENCE:</span><br>
                     <p class="text-neon-blue leading-tight mb-2">
                         [RIDDLE]: "I am drawn from nine cells and two 'X' marks. My letters are pieces of a grid, some holding a single point of light. The secret is held by geometry."
@@ -443,11 +450,11 @@
                         type="text"
                         id="answerInput6"
                         placeholder="> ENTER FINAL DECRYPTED KEY..."
-                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-yellow uppercase"
+                        class="flex-grow p-3 rounded-none bg-terminal-black focus:ring-0 border-neon-yellow uppercase text-xl sm:text-lg"
                     >
                     <button
                         id="submitButton6"
-                        class="submit-btn py-3 px-6 rounded-none transition duration-300"
+                        class="submit-btn py-3 px-6 rounded-none text-xl sm:text-lg transition duration-300"
                     >
                         [ FINAL DECRYPT ]
                     </button>
@@ -468,8 +475,8 @@
             const errorSFX = document.getElementById('errorSFX');
             
             const startBackgroundMusic = () => {
-                if (backgroundAudio && backgroundAudio.src.includes('soundhelix')) { // Checks if the placeholder was replaced
-                    backgroundAudio.volume = 0.5; // Set volume to half
+                if (backgroundAudio && backgroundAudio.src.includes('soundhelix')) { 
+                    backgroundAudio.volume = 0.5; 
                     backgroundAudio.play().catch(e => console.log("Background audio playback failed:", e));
                 } else {
                     console.log("Audio placeholder not replaced or playback failed.");
@@ -493,8 +500,6 @@
             const phase5Section = document.getElementById('phase5Section'); 
             const phase6Section = document.getElementById('phase6Section'); 
 
-            // Input/Button References (omitted for brevity in this section)
-
             // Specific Elements
             const pathSolution = 'https://n9.cl/c2jsu'; 
             const activeLink = document.getElementById('activeLink');
@@ -508,7 +513,6 @@
             // Utility functions (showMessage, activateNextPhase, etc.)
             const showMessage = (message, isSuccess = false, borderColorClass = 'border-red-600') => {
                 
-                // 3. REPRODUCCIÓN DE SFX EN MENSAJES
                 if (isSuccess) {
                     successSFX.currentTime = 0;
                     successSFX.play().catch(e => console.log("Success SFX failed:", e));
@@ -522,10 +526,10 @@
                 
                 if (isSuccess) {
                     resultOutput.classList.add(`border-${borderColorClass}`);
-                    resultOutput.innerHTML = `<p class="text-base text-neon-green">[STATUS: OK] ${message}</p>`;
+                    resultOutput.innerHTML = `<p class="text-xl sm:text-base text-neon-green">[STATUS: OK] ${message}</p>`; /* Ajuste de tamaño */
                 } else {
                     resultOutput.classList.add('border-glitch-red');
-                    resultOutput.innerHTML = `<p class="text-base text-glitch-red">[ERROR] ${message}</p>`;
+                    resultOutput.innerHTML = `<p class="text-xl sm:text-base text-glitch-red">[ERROR] ${message}</p>`; /* Ajuste de tamaño */
                 }
                 
                 if (!isSuccess) {
@@ -546,10 +550,10 @@
                     setTimeout(() => {
                         nextPhase.classList.add('opacity-100');
                         nextPhase.classList.remove('opacity-0');
-                        statusHeader.innerHTML = `[PHASE ${phaseNumber}]`; 
-                        protocolStatus.innerHTML = `> STATUS: ACTIVE <span class="cursor quick-blink">_</span>`;
+                        statusHeader.innerHTML = `<span class="text-xl sm:text-lg">[PHASE ${phaseNumber}]</span>`; /* Ajuste de tamaño */
+                        protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; /* Ajuste de tamaño */
                         
-                        const clueDelay = 15000; // 15 seconds
+                        const clueDelay = 15000; 
                         
                         if (phaseNumber === '3') {
                             secondaryClue3.classList.remove('visible'); 
@@ -572,26 +576,25 @@
             const showFinalSuccess = (targetPhrase) => {
                 phase6Section.classList.add('opacity-50');
 
-                // 3. SFX DE ÉXITO FINAL (reutilizando successSFX)
                 successSFX.currentTime = 0;
                 successSFX.play().catch(e => console.log("Final Success SFX failed:", e));
 
                 resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-yellow');
                 resultOutput.classList.add('bg-terminal-black', 'border-4', 'border-neon-purple', 'rounded-none', 'animate-fade-in');
 
-                // 2. CORRECCIÓN PARA MÓVIL: CLASES RESPONSIVAS Y SIN 'whitespace-nowrap'
+                // CORRECCIÓN PARA MÓVIL: CLASES RESPONSIVAS Y SÍMBOLO CAMBIADO
                 resultOutput.innerHTML = `
-                    <p class="text-xl sm:text-2xl font-bold text-neon-green mb-4">
+                    <p class="text-2xl sm:text-xl font-bold text-neon-green mb-4">
                         [ FULL PROTOCOL DECRYPTED ]
                     </p>
-                    <p class="text-3xl sm:text-4xl font-extrabold text-neon-yellow tracking-wider mb-6">
+                    <p class="text-4xl sm:text-3xl font-extrabold text-neon-yellow tracking-wider mb-6">
                         ${targetPhrase}
                     </p>
-                    <p class="text-xl sm:text-2xl text-neon-green font-bold mb-4">
+                    <p class="text-2xl sm:text-xl text-neon-green font-bold mb-4">
                         AGENT AUTHORIZED. YOUR PROFILE HAS BEEN ACCEPTED INTO THE CIRCLE.
                     </p>
-                    <p class="text-4xl sm:text-5xl font-extrabold text-neon-green tracking-widest">
-                        MISSION ACCOMPLISHED <span class="text-5xl sm:text-6xl">脂</span>
+                    <p class="text-5xl sm:text-4xl font-extrabold text-neon-green tracking-widest">
+                        MISSION ACCOMPLISHED <span class="text-6xl sm:text-5xl">✓</span>
                     </p>
                 `;
             }
@@ -604,8 +607,8 @@
                 setTimeout(() => {
                     mainContainer.classList.add('opacity-100');
                     mainContainer.classList.remove('opacity-0');
-                    statusHeader.innerHTML = `[PHASE 1]`;
-                    protocolStatus.innerHTML = `> STATUS: ACTIVE <span class="cursor quick-blink">_</span>`;
+                    statusHeader.innerHTML = `<span class="text-xl sm:text-lg">[PHASE 1]</span>`; /* Ajuste de tamaño */
+                    protocolStatus.innerHTML = `<span class="text-xl sm:text-lg">> STATUS: ACTIVE <span class="cursor quick-blink">_</span></span>`; /* Ajuste de tamaño */
                 }, 50);
             });
 
@@ -615,7 +618,7 @@
                 const inputElement = document.getElementById(inputId);
                 const buttonElement = document.getElementById(buttonId);
                 const currentSection = document.getElementById(`phase${phaseNum}Section`);
-                const nextSection = document.getElementById(nextPhaseSection);
+                const nextSection = (nextPhaseSection) ? document.getElementById(nextPhaseSection) : null;
 
                 const checkAnswer = () => {
                     const decodedMessage = cleanFn(inputElement.value);
@@ -625,7 +628,6 @@
                         buttonElement.disabled = true;
                         buttonElement.classList.replace('submit-btn', 'bg-gray-700');
                         
-                        // Custom logic for Phase 3 link
                         if (phaseNum === 3) {
                             activeLink.textContent = pathSolution;
                             activeLink.href = pathSolution;
@@ -641,11 +643,8 @@
                                                      "[ VERIFIED ]";
                         }
                         
-                        // Custom success for Phase 5
                         if (phaseNum === 5) {
-                            // Custom success message for Phase 5 (to show the link)
                             showMessage("PROTOCOL ACCEPTED. ADVANCING TO NEXT ENCRYPTION LAYER. Keep up the good work.", true, color);
-                            // Custom display logic for link
                             resultOutput.classList.remove('hidden', 'border-red-600', 'border-neon-yellow');
                             resultOutput.classList.add('bg-terminal-black', 'border', 'border-neon-purple', 'rounded-none', 'animate-fade-in');
 
@@ -657,17 +656,15 @@
                             }
 
                             resultOutput.innerHTML = `
-                                <p class="text-base text-neon-green">[CONTEXTUAL INDEXING VERIFIED]</p>
-                                <p class="text-sm text-neon-yellow mb-2">
+                                <p class="text-xl sm:text-base text-neon-green">[CONTEXTUAL INDEXING VERIFIED]</p>
+                                <p class="text-xl sm:text-base text-neon-yellow mb-2">
                                     **SUCCESS.** The indices are aligned. Proceed to the final vector.
                                 </p>
                             `;
-                            // Manual advance
                             activateNextPhase(currentSection, nextSection, '6', color);
                             return;
                         }
 
-                        // Standard advance for other phases
                         activateNextPhase(currentSection, nextSection, phaseNum + 1, color);
 
                     } else {
